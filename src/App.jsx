@@ -18,7 +18,7 @@ function App() {
     <div
       className={`${dark} flex h-screen w-full items-center justify-center md:p-5`}
     >
-      <div className="flex flex-col items-center w-full h-full p-5 text-gray-500 bg-gray-100 shadow-lg jusify-center dark:bg-blue-900 dark:text-gray-50 md:w-1/2">
+      <div className="flex flex-col items-center w-full h-full p-5 text-gray-500 bg-gray-100 shadow-lg jusify-center dark:bg-gray-900 dark:text-orange-100 md:w-1/2">
         <header className="relative flex items-center justify-center w-full py-5 text-center">
           <h3 className="text-xl text-center">To Do List</h3>
           <div className="absolute right-0">

@@ -92,8 +92,8 @@ export const TodoList = () => {
                           <li
                             className={
                               l.complete
-                                ? "text-shadow text-shadow-none line-through hover:text-white dark:hover:text-blue-500"
-                                : "text-shadow text-shadow-none hover:text-white dark:hover:text-blue-500"
+                                ? "line-through hover:text-white dark:hover:text-blue-500"
+                                : " hover:text-white dark:hover:text-blue-500"
                             }
                           >
                             {l.text}
