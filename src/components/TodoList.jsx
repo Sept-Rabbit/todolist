@@ -87,7 +87,7 @@ export const TodoList = () => {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="relative flex flex-row items-center justify-between px-3 py-2 my-3 border border-white rounded-md"
+                          className="relative flex flex-row items-center justify-between px-3 py-2 my-3 border border-white rounded-md list "
                         >
                           <li className={l.complete && "line-through"}>
                             {l.text}
@@ -97,8 +97,8 @@ export const TodoList = () => {
                               onClick={() => handleCheck(l.id)}
                               className={
                                 l.complete.toString() === "true"
-                                  ? "h-5 w-5 cursor-pointer fill-green-500"
-                                  : "h-5 w-5 cursor-pointer"
+                                  ? "h-5 w-5 cursor-pointer fill-green-800 "
+                                  : "h-5 w-5 cursor-pointer "
                               }
                             />
                             <PencilIcon

@@ -6,3 +6,19 @@ html,
 body {
   height: 100%;
 }
+
+.list:nth-child(4n + 1) {
+  @apply bg-green-300;
+}
+
+.list:nth-child(4n + 2) {
+  @apply bg-cyan-300;
+}
+
+.list:nth-child(4n + 3) {
+  @apply bg-amber-300;
+}
+
+.list:nth-child(4n + 4) {
+  @apply bg-red-400;
+}
