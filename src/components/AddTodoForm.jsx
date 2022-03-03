@@ -32,7 +32,7 @@ export const AddTodoForm = (props) => {
     if (newTodo.text.trim().length === 0) {
       setInputIsValid(false);
     } else {
-      setList([...list, newTodo]);
+      setList([newTodo, ...list]);
       setNewTodo({ id: "", text: "", complete: false });
       setInputIsValid(true);
     }

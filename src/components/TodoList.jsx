@@ -16,6 +16,8 @@ export const TodoList = () => {
     complete: false,
   });
 
+  let reverseList = [];
+
   const colors = [
     "bg-red-300",
     "bg-orange-300",
@@ -26,7 +28,7 @@ export const TodoList = () => {
   ];
 
   const handleDelete = (id) => {
-    const filteredList = list.filter((l) => l.id !== id);
+    const filteredList = reverseList.filter((l) => l.id !== id);
     setList(filteredList);
   };
 
@@ -37,6 +39,7 @@ export const TodoList = () => {
       }
       return l;
     });
+
     setList(updatedList);
   };
 
@@ -50,8 +53,6 @@ export const TodoList = () => {
     });
   };
 
-  let reverseList = [...list].reverse();
-
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -59,12 +60,15 @@ export const TodoList = () => {
       return;
     }
 
-    const items = Array.from(reverseList);
+    const items = Array.from(list);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    reverseList = items;
+    setList(items);
   };
+
+  reverseList = [...list].reverse();
+  console.log(reverseList);
 
   return (
     <>
@@ -78,7 +82,7 @@ export const TodoList = () => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {reverseList.map((l, index) => {
+                {list.reverse().map((l, index) => {
                   return (
                     <Draggable draggableId={l.text} index={index} key={l.id}>
                       {(provided) => (
@@ -89,13 +93,13 @@ export const TodoList = () => {
                           className="relative flex flex-row items-center justify-between px-3 py-2 my-3 border border-white rounded-md"
                         >
                           <li className={l.complete && "line-through"}>
-                            {l.text}
+                            {l.id} {l.text} {l.complete.toString()}
                           </li>
                           <div className="flex flex-row items-center">
                             <CheckCircleIcon
                               onClick={() => handleCheck(l.id)}
                               className={
-                                l.complete
+                                l.complete.toString() === "true"
                                   ? "h-5 w-5 cursor-pointer fill-green-500"
                                   : "h-5 w-5 cursor-pointer"
                               }
