@@ -26,3 +26,11 @@ input:checked ~ .toggle {
 .list:nth-child(4n + 4) {
   @apply bg-red-400;
 }
+
+.text-shadow {
+  text-shadow: black 0.05em 0.1em 0.2em;
+}
+
+.text-shadow:hover {
+  text-shadow: none;
+}
