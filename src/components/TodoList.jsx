@@ -67,9 +67,6 @@ export const TodoList = () => {
     setList(items);
   };
 
-  reverseList = [...list].reverse();
-  console.log(reverseList);
-
   return (
     <>
       <div className="">
@@ -82,7 +79,7 @@ export const TodoList = () => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {list.reverse().map((l, index) => {
+                {list.map((l, index) => {
                   return (
                     <Draggable draggableId={l.text} index={index} key={l.id}>
                       {(provided) => (
@@ -93,7 +90,7 @@ export const TodoList = () => {
                           className="relative flex flex-row items-center justify-between px-3 py-2 my-3 border border-white rounded-md"
                         >
                           <li className={l.complete && "line-through"}>
-                            {l.id} {l.text} {l.complete.toString()}
+                            {l.text}
                           </li>
                           <div className="flex flex-row items-center">
                             <CheckCircleIcon
