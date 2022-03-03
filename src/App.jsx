@@ -4,7 +4,7 @@ import { SunIcon } from "@heroicons/react/outline";
 import { MoonIcon } from "@heroicons/react/outline";
 
 function App() {
-  const [dark, setDark] = useState("dark");
+  const [dark, setDark] = useState("");
   const [toggleClicked, setToggleClicked] = useState(false);
 
   const handleToggle = () => {
