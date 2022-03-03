@@ -19,7 +19,7 @@ export const TodoList = () => {
   let reverseList = [];
 
   const colors = [
-    "bg-red-300",
+    "bg-red-400",
     "bg-orange-300",
     "bg-amber-600",
     "bg-yellow-200",
@@ -28,7 +28,7 @@ export const TodoList = () => {
   ];
 
   const handleDelete = (id) => {
-    const filteredList = reverseList.filter((l) => l.id !== id);
+    const filteredList = list.filter((l) => l.id !== id);
     setList(filteredList);
   };
 
@@ -75,7 +75,7 @@ export const TodoList = () => {
           <Droppable droppableId="todos">
             {(provided) => (
               <ul
-                className="relative my-5 text-white"
+                className="relative my-5"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
@@ -87,9 +87,15 @@ export const TodoList = () => {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="relative flex flex-row items-center justify-between px-3 py-2 my-3 border border-white rounded-md list "
+                          className="relative flex flex-row items-center justify-between px-3 py-2 my-3 border border-gray-900 rounded-md list dark:border-white"
                         >
-                          <li className={l.complete && "line-through"}>
+                          <li
+                            className={
+                              l.complete
+                                ? "line-through hover:text-white dark:hover:text-blue-500"
+                                : "hover:text-white dark:hover:text-blue-500"
+                            }
+                          >
                             {l.text}
                           </li>
                           <div className="flex flex-row items-center">
@@ -97,17 +103,17 @@ export const TodoList = () => {
                               onClick={() => handleCheck(l.id)}
                               className={
                                 l.complete.toString() === "true"
-                                  ? "h-5 w-5 cursor-pointer fill-green-800 "
-                                  : "h-5 w-5 cursor-pointer "
+                                  ? "h-5 w-5 cursor-pointer fill-sky-400 text-white dark:fill-green-800"
+                                  : "h-5 w-5 cursor-pointer hover:text-white dark:hover:text-blue-500"
                               }
                             />
                             <PencilIcon
                               onClick={() => handleEdit(l.id)}
-                              className="w-5 h-5 mx-3 cursor-pointer"
+                              className="w-5 h-5 mx-5 cursor-pointer hover:text-white dark:hover:text-blue-500"
                             />
                             <TrashIcon
                               onClick={() => handleDelete(l.id)}
-                              className="w-5 h-5 cursor-pointer"
+                              className="w-5 h-5 cursor-pointer hover:text-white dark:hover:text-blue-500"
                             />
                           </div>
                         </div>

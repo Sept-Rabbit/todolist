@@ -22,11 +22,12 @@ export const EditForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const filteredList = list.filter((l) => l.id !== selectedTodo.id);
+    const selectIndex = list.findIndex((l) => l.id === updatedTodo.id);
+
     if (updatedTodo.text.trim().length === 0) {
       setInputIsValid(false);
     } else {
-      setList([...filteredList, updatedTodo]);
+      list[selectIndex] = updatedTodo;
       setShowEditForm(false);
     }
   };

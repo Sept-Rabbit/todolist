@@ -40,7 +40,7 @@ export const AddTodoForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col">
-      <div className="flex flex-row">
+      <div className="flex flex-row dark:text-gray-600">
         <input
           onChange={handleNewTodo}
           className="w-full p-2 border border-gray-300 rounded-md"
@@ -48,7 +48,7 @@ export const AddTodoForm = (props) => {
           placeholder="Add Todo List"
           value={newTodo.text}
         />
-        <button className="w-20 p-2 text-center bg-gray-200 border border-gray-300 rounded-md">
+        <button className="w-20 p-2 text-center bg-gray-200 border border-gray-300 rounded-md ">
           Add
         </button>
       </div>

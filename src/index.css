@@ -7,6 +7,10 @@ body {
   height: 100%;
 }
 
+input:checked ~ .toggle {
+  @apply translate-x-6;
+}
+
 .list:nth-child(4n + 1) {
   @apply bg-green-300;
 }
