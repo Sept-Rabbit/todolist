@@ -12,8 +12,6 @@ function App() {
     toggleClicked ? setDark("") : setDark("dark");
   };
 
-  console.log(toggleClicked, dark);
-
   return (
     <div
       className={`${dark} flex h-screen w-full items-center justify-center md:p-5`}
@@ -53,8 +51,7 @@ function App() {
             </label>
           </div>
         </header>
-
-        <main className="w-4/5 h-full">
+        <main className="relative w-full h-full">
           <TodoList />
         </main>
       </div>
