@@ -102,7 +102,7 @@ function App() {
           <main className="relative w-full h-full">
             <PlusCircleIcon
               onClick={handleAddToto}
-              className="absolute bottom-0 w-16 h-16 cursor-pointer right-5 fill-red-500"
+              className="absolute w-16 h-16 cursor-pointer bottom-20 right-5 fill-red-500"
             />
 
             <TodoList list={list} setList={setList} />
