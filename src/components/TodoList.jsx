@@ -95,12 +95,10 @@ export const TodoList = () => {
     if (result.destination.index === result.source.index) {
       return;
     }
-
-    const items = Array.from(list);
+    const items = Array.from(todoList);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
-    setList(items);
+    todoList = items;
   };
 
   return (
