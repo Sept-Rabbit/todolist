@@ -45,7 +45,7 @@ function App() {
       <div
         className={`${dark} flex h-screen w-full items-center justify-center md:p-5`}
       >
-        <div className="flex flex-col items-center w-full h-full p-5 mb-5 text-gray-500 bg-gray-100 shadow-lg jusify-center dark:bg-gray-900 dark:text-orange-100 md:w-1/2">
+        <div className="flex flex-col items-center w-full h-full p-5 text-gray-500 bg-gray-100 shadow-lg jusify-center dark:bg-gray-900 dark:text-orange-100 md:w-1/2">
           <header className="relative flex items-center justify-between w-full py-5 text-center">
             <div className="w-32">
               <SearchBar
@@ -89,6 +89,15 @@ function App() {
                 </div>
               </label>
             </div>
+            {showAddForm && (
+              <div className="absolute z-50 top-32 left-5 md:left-5 lg:left-10">
+                <AddTodoForm
+                  setShowAddForm={setShowAddForm}
+                  list={list}
+                  setList={setList}
+                />
+              </div>
+            )}
           </header>
           <main className="relative w-full h-full">
             <PlusCircleIcon
@@ -97,16 +106,6 @@ function App() {
             />
 
             <TodoList list={list} setList={setList} />
-
-            {showAddForm && (
-              <div className="absolute z-50 left-5 md:left-5 lg:left-10">
-                <AddTodoForm
-                  setShowAddForm={setShowAddForm}
-                  list={list}
-                  setList={setList}
-                />
-              </div>
-            )}
           </main>
           {showAddForm && (
             <div className="fixed top-0 left-0 z-20 flex justify-center w-screen h-screen">
