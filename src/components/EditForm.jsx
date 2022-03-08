@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { XIcon } from "@heroicons/react/outline";
 
 export const EditForm = (props) => {
-  const { list, selectedTodo, setList, setShowEditForm } = props;
+  const { list, selectedTodo, setList, setShowEditForm, setShowOptions } =
+    props;
 
   const [titleIsValid, setTitleIsValid] = useState(true);
   const [contentIsValid, setContentIsValid] = useState(true);
@@ -22,7 +23,7 @@ export const EditForm = (props) => {
   };
 
   const handleEditContent = (e) => {
-    setTodoTitle(e.target.value);
+    setTodoContent(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -48,6 +49,7 @@ export const EditForm = (props) => {
     if (titleIsValid && contentIsValid) {
       list[selectIndex] = updatedTodo;
       setShowEditForm(false);
+      setShowOptions(false);
     }
   };
 

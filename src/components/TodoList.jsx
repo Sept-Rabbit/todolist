@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { AddTodoForm } from "./AddTodoForm";
-import { SearchTodoForm } from "./SearchTodoForm";
+import { SearchBar } from "./SearchBar";
 import { EditForm } from "./EditForm";
 import { PlusCircleIcon } from "@heroicons/react/solid";
 import { TodoOptions } from "./TodoOptions";
+import { ListContext } from "../context/listContext";
 
 export const TodoList = () => {
-  const [list, setList] = useState([]);
-  const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [searchText, setSearchText] = useState("");
+  let [todoList, setTodoList] = useState([]);
   const [bgColor, setBgColor] = useState("");
-  const [showOptions, setShowOptions] = useState(false);
+
   const [selectedTodo, setSelectedTodo] = useState({
     id: "",
     title: "",
@@ -28,9 +27,20 @@ export const TodoList = () => {
     bgColor: "",
   });
 
+  let { originalList, searchText, showOptions, setShowOptions } =
+    useContext(ListContext);
+  if (searchText.length !== 0) {
+    let filteredList = originalList.filter((l) => {
+      return l.title.toLowerCase().includes(searchText);
+    });
+    todoList = filteredList;
+  } else {
+    todoList = originalList;
+  }
+
   const handleOptions = (id) => {
     setShowOptions(true);
-    let selectTodo = list.filter((l) => l.id === id);
+    let selectTodo = todoList.filter((l) => l.id === id);
     setSelectedTodo({
       id: selectTodo[0].id,
       title: selectTodo[0].title,
@@ -41,7 +51,7 @@ export const TodoList = () => {
   };
 
   const handleBgColor = (id, bgColor) => {
-    let selectTodo = list.filter((l) => l.id === id);
+    let selectTodo = todoList.filter((l) => l.id === id);
 
     selectedTodo.id = selectTodo[0].id;
     selectedTodo.title = selectTodo[0].title;
@@ -49,42 +59,32 @@ export const TodoList = () => {
     selectedTodo.complete = selectTodo[0].complete;
     selectedTodo.bgColor = bgColor;
 
-    const selectIndex = list.findIndex((l) => l.id === selectedTodo.id);
-    list[selectIndex] = selectedTodo;
-    setShowOptions(false);
-  };
-
-  const handleAddToto = () => {
-    setShowAddForm(true);
-  };
-
-  const handleDelete = (id) => {
-    const filteredList = list.filter((l) => l.id !== id);
-    setList(filteredList);
+    const selectIndex = todoList.findIndex((l) => l.id === selectedTodo.id);
+    todoList[selectIndex] = selectedTodo;
     setShowOptions(false);
   };
 
   const handleCheck = (id) => {
-    let updatedList = list.map((l) => {
+    let updatedList = todoList.map((l) => {
       if (l.id === id) {
         l.complete = !l.complete;
       }
       return l;
     });
 
-    setList(updatedList);
+    setTodoList(updatedList);
     setShowOptions(false);
   };
 
   const handleEdit = (id) => {
-    let selectTodo = list.filter((l) => l.id === id);
+    let selectTodo = todoList.filter((l) => l.id === id);
     setShowEditForm(true);
     setSelectedTodo({
       id: selectTodo[0].id,
       title: selectTodo[0].title,
       content: selectTodo[0].content,
       complete: selectTodo[0].complete,
-      bgColor: selectedTodo[0].bgColor,
+      bgColor: selectedTodo[0]?.bgColor,
     });
     setShowOptions(false);
   };
@@ -105,35 +105,22 @@ export const TodoList = () => {
 
   return (
     <>
-      <PlusCircleIcon
-        onClick={handleAddToto}
-        className="absolute bottom-0 w-16 h-16 cursor-pointer right-5 fill-red-500"
-      />
-      <div className="relative flex flex-col items-center justify-center text-sm">
-        <div className="flex items-center justify-center w-full pb-5 border-b-2 border-gray-500">
-          <SearchTodoForm list={list} setList={setList} />
-        </div>
-
+      <div className="relative flex flex-col items-center justify-center py-5 text-sm border-t-2 border-gray-500">
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="todos">
             {(provided) => (
               <ul
-                className="relative grid w-full grid-cols-2 gap-5 px-3"
+                className="relative grid w-full grid-cols-2 gap-7"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {showAddForm && (
-                  <div className="absolute z-50 left-5 md:left-5 lg:left-10">
-                    <AddTodoForm
-                      setShowAddForm={setShowAddForm}
-                      list={list}
-                      setList={setList}
-                    />
-                  </div>
-                )}
-                {list.map((l, index) => {
+                {todoList.map((l, index) => {
                   return (
-                    <Draggable draggableId={l.title} index={index} key={l.id}>
+                    <Draggable
+                      draggableId={l.id.toString()}
+                      index={index}
+                      key={l.id}
+                    >
                       {(provided) => (
                         <div
                           onClick={() => handleOptions(l.id)}
@@ -169,10 +156,9 @@ export const TodoList = () => {
                   <div className="absolute z-50 top-10 left-16 lg:left-16 xl:left-40">
                     <TodoOptions
                       selectedTodo={selectedTodo}
-                      list={list}
+                      list={todoList}
                       handleEdit={handleEdit}
                       handleCheck={handleCheck}
-                      handleDelete={handleDelete}
                       setShowOptions={setShowOptions}
                       handleBgColor={handleBgColor}
                     />
@@ -183,8 +169,9 @@ export const TodoList = () => {
                     <EditForm
                       setShowEditForm={setShowEditForm}
                       selectedTodo={selectedTodo}
-                      list={list}
-                      setList={setList}
+                      list={todoList}
+                      setList={setTodoList}
+                      setShowOptions={setShowOptions}
                     />
                   </div>
                 )}
@@ -194,7 +181,7 @@ export const TodoList = () => {
           </Droppable>
         </DragDropContext>
       </div>
-      {(showEditForm || showAddForm || showOptions) && (
+      {(showEditForm || showOptions) && (
         <div className="fixed top-0 left-0 z-20 flex justify-center w-screen h-screen">
           <div className="absolute top-0 left-0 w-screen h-screen bg-gray-900/90"></div>
         </div>

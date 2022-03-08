@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TrashIcon } from "@heroicons/react/outline";
 import { PencilIcon } from "@heroicons/react/outline";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import { XIcon } from "@heroicons/react/outline";
 import { ColorSwatchIcon } from "@heroicons/react/outline";
+import { ListContext } from "../context/listContext";
 
 const colors = [
   "bg-green-300",
@@ -18,11 +19,13 @@ export const TodoOptions = (props) => {
   const {
     selectedTodo,
     handleCheck,
-    handleDelete,
     handleEdit,
     setShowOptions,
     handleBgColor,
   } = props;
+
+  const { handleDelete } = useContext(ListContext);
+  console.log(handleDelete);
   const id = selectedTodo.id;
   const [showColors, setShowColors] = useState(false);
 
