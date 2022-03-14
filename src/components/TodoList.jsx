@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { AddTodoForm } from "./AddTodoForm";
-import { SearchBar } from "./SearchBar";
 import { EditForm } from "./EditForm";
 import { PlusCircleIcon } from "@heroicons/react/solid";
 import { TodoOptions } from "./TodoOptions";
 import { ListContext } from "../context/listContext";
+import { useStore } from "../store/listStore";
 
 export const TodoList = () => {
   const [showEditForm, setShowEditForm] = useState(false);
+  const { list } = useStore();
   let [todoList, setTodoList] = useState([]);
   const [bgColor, setBgColor] = useState("");
 
@@ -27,15 +27,14 @@ export const TodoList = () => {
     bgColor: "",
   });
 
-  let { originalList, searchText, showOptions, setShowOptions } =
-    useContext(ListContext);
+  let { searchText, showOptions, setShowOptions } = useContext(ListContext);
   if (searchText.length !== 0) {
-    let filteredList = originalList.filter((l) => {
+    let filteredList = list.filter((l) => {
       return l.title.toLowerCase().includes(searchText);
     });
     todoList = filteredList;
   } else {
-    todoList = originalList;
+    todoList = list;
   }
 
   const handleOptions = (id) => {
@@ -132,8 +131,8 @@ export const TodoList = () => {
                               <h6
                                 className={
                                   l.complete
-                                    ? "text-md line-through hover:text-white dark:text-shadow-sm dark:hover:text-blue-500 dark:hover:text-shadow-none"
-                                    : "text-md hover:text-white dark:text-shadow-sm dark:hover:text-blue-500 dark:hover:text-shadow-none"
+                                    ? "text-md font-medium line-through hover:text-white dark:text-shadow-sm dark:hover:text-blue-500 dark:hover:text-shadow-none"
+                                    : "text-md font-medium hover:text-white dark:text-shadow-sm dark:hover:text-blue-500 dark:hover:text-shadow-none"
                                 }
                               >
                                 {l.title}

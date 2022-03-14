@@ -6,15 +6,15 @@ import { MoonIcon } from "@heroicons/react/outline";
 import { PlusCircleIcon } from "@heroicons/react/solid";
 import { AddTodoForm } from "./components/AddTodoForm";
 import { SearchBar } from "./components/SearchBar";
+import { useStore } from "../src/store/listStore";
 
 function App() {
   const [dark, setDark] = useState("");
   const [toggleClicked, setToggleClicked] = useState(false);
-  const [list, setList] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [showAddForm, setShowAddForm] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-
+  const { list } = useStore();
   const originalList = list;
 
   const handleToggle = () => {
@@ -26,18 +26,11 @@ function App() {
     setShowAddForm(true);
   };
 
-  const handleDelete = (id) => {
-    const filteredList = originalList.filter((l) => l.id !== id);
-    setList(filteredList);
-    setShowOptions(false);
-  };
-
   return (
     <ListContext.Provider
       value={{
         originalList,
         searchText,
-        handleDelete,
         showOptions,
         setShowOptions,
       }}
@@ -91,11 +84,7 @@ function App() {
             </div>
             {showAddForm && (
               <div className="absolute z-50 top-32 left-5 md:left-5 lg:left-10">
-                <AddTodoForm
-                  setShowAddForm={setShowAddForm}
-                  list={list}
-                  setList={setList}
-                />
+                <AddTodoForm setShowAddForm={setShowAddForm} />
               </div>
             )}
           </header>
@@ -105,7 +94,7 @@ function App() {
               className="absolute w-16 h-16 cursor-pointer bottom-20 right-5 fill-red-500"
             />
 
-            <TodoList list={list} setList={setList} />
+            <TodoList />
           </main>
           {showAddForm && (
             <div className="fixed top-0 left-0 z-20 flex justify-center w-screen h-screen">

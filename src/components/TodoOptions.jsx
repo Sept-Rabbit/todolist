@@ -5,6 +5,7 @@ import { CheckCircleIcon } from "@heroicons/react/outline";
 import { XIcon } from "@heroicons/react/outline";
 import { ColorSwatchIcon } from "@heroicons/react/outline";
 import { ListContext } from "../context/listContext";
+import { useStore } from "../store/listStore";
 
 const colors = [
   "bg-green-300",
@@ -24,13 +25,18 @@ export const TodoOptions = (props) => {
     handleBgColor,
   } = props;
 
-  const { handleDelete } = useContext(ListContext);
-  console.log(handleDelete);
+  const { list, deleteTodo } = useStore();
+
   const id = selectedTodo.id;
   const [showColors, setShowColors] = useState(false);
 
   const handleShowColors = () => {
     setShowColors(!showColors);
+  };
+
+  const handleDelete = (id) => {
+    deleteTodo(id);
+    setShowOptions(false);
   };
 
   return (

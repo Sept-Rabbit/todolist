@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { XIcon } from "@heroicons/react/outline";
+import { useStore } from "../store/listStore";
 
 export const AddTodoForm = (props) => {
-  const { list, setList, setShowAddForm } = props;
+  const { list, addTodo } = useStore();
+  const { setShowAddForm } = props;
   const [titleIsValid, setTitleIsValid] = useState(true);
   const [contentIsValid, setContentIsValid] = useState(true);
   const [newTodoTitle, setNewTodoTitle] = useState("");
@@ -16,11 +18,13 @@ export const AddTodoForm = (props) => {
   });
 
   const handleNewTodoTitle = (e) => {
-    setNewTodoTitle(e.target.value);
+    let title = e.target.value;
+    setNewTodoTitle(title.toUpperCase());
   };
 
   const handleNewTodoContent = (e) => {
-    setNewTodoContent(e.target.value.trim());
+    let content = e.target.value;
+    setNewTodoContent(content[0].toUpperCase() + content.slice(1));
   };
 
   const handleSubmit = (e) => {
@@ -43,7 +47,7 @@ export const AddTodoForm = (props) => {
       newTodo.title = newTodoTitle;
       newTodo.content = newTodoContent;
       newTodo.complete = false;
-      setList([newTodo, ...list]);
+      addTodo(newTodo);
       setNewTodo({
         id: "",
         title: "",
